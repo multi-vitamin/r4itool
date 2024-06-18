@@ -126,7 +126,7 @@ int main(int argc, char const *const *argv) {
   std::cout << '\n';
 
   // Area checksum
-  auto const checksumArea = secretArea->areachk;
+  auto checksumArea = (static_cast<u32>(secretArea->areachk_2) << 16) | secretArea->areachk_1;
   auto const computedArea =
       genAreaChk(encodeU16(computed9), encodeU16(computed7), encodeU16(computedLdr));
   std::cout << "- checksumArea: " << checksumArea << '\n';
@@ -141,7 +141,8 @@ int main(int argc, char const *const *argv) {
   secretArea->arm9chk = encodeU16(computed9);
   secretArea->arm7chk = encodeU16(computed7);
   secretArea->ldrchk = encodeU16(computedLdr);
-  secretArea->areachk = computedArea;
+  secretArea->areachk_2 = static_cast<u16>(computedArea >> 16);
+  secretArea->areachk_1 = static_cast<u16>(computedArea & 0xFFFF);
 
   if (!writeFile("R4-fixed.dat", r4)) {
     std::cout << "ERROR: Could not save R4-fixed.dat!\n";
