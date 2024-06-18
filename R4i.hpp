@@ -20,7 +20,8 @@ struct alignas(2) SecretArea {
   u16 arm9chk;
   u16 arm7chk;
   u16 ldrchk;
-  u32 areachk;
+  u16 areachk_1;
+  u16 areachk_2;
   u32 dldiOffset;
 };
 
